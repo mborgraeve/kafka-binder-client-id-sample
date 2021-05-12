@@ -1,0 +1,28 @@
+spring:
+  cloud:
+    function.definition: process
+    stream:
+      bindings:
+        process-in-0:
+          destination: IN
+          binder: kafka-1
+        process-out-0:
+          destination: OUT
+          binder: kafka-2
+      binders:
+        kafka-1:
+          type: kafka
+          environment:
+            spring.cloud.stream.kafka.binder:
+              brokers: 10.0.0.228:9092 # Put your first cluster ip/dns here
+        kafka-2:
+          type: kafka
+          environment:
+            spring.cloud.stream.kafka.binder:
+              brokers: 10.0.0.235:9092 # Put your second cluster ip/dns here
+      kafka:
+        binder:
+          applicationId: application_${spring.profiles.active}
+  kafka:
+    admin:
+      client-id: testClientId

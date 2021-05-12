@@ -1,0 +1,20 @@
+spring:
+  cloud:
+    function.definition: process
+    stream:
+      bindings:
+        process-in-0:
+          destination: IN
+          binder: kafka-binder
+        process-out-0:
+          destination: OUT
+          binder: kafka-binder
+      binders:
+        kafka-binder:
+          type: kafka
+          environment:
+            spring.cloud.stream.kafka.binder:
+              brokers: localhost:9092
+      kafka:
+        binder:
+          applicationId: application_${spring.profiles.active}
